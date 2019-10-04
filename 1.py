@@ -17,9 +17,7 @@ class Student(object):
 
 from datetime import datetime
 datetime.now()
-##<<<<<<< HEAD
 add loacl a new line
 =======
 add a new line
-##>>>>>>> baa0845747974bd73ff4f566375cfc70fb33c6df
 add another line
