@@ -17,3 +17,6 @@ class Student(object):
 
 from datetime import datetime
 datetime.now()
+def get_pay(money, time):
+    money = 5.0
+    time = datetime.now()
