@@ -17,6 +17,14 @@ class Student(object):
 
 from datetime import datetime
 datetime.now()
-def get_pay(money, time):
-    money = 5.0
+def get_pay(moneye, time):
+    moneye = 5.0
     time = datetime.now()
+    if datetime:
+        pass
+    else:
+        pass
+
+from bs4 import BeautifulSoup
+soup = BeautifulSoup.find()
+import numpy as np
