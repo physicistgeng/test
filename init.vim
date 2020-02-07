@@ -27,17 +27,20 @@ set ruler                   " 打开状态栏标尺
 set cursorline              " 突出显示当前行
 set magic                   " 设置魔术
 " 自动缩进
-set autoindent
-set cindent
+"set autoindent
+"为c和java提供缩进
+"set cindent
 " Tab键的宽度
 set tabstop=4
 " 统一缩进为4
 set softtabstop=4
 set shiftwidth=4
 " 不要用空格代替制表符
-set noexpandtab
+"set noexpandtab
+"使用空格代替制表符
+set expandtab
 " 在行和段开始处使用制表符
-set smarttab
+"set smarttab
 " 显示行号
 set number
 set relativenumber
@@ -85,6 +88,17 @@ map <LEADER>j <C-w>j
 map <LEADER>h <C-w>h
 map <LEADER>l <C-w>l
 
+map sk :set nosplitbelow<CR>:split<CR>:set splitbelow<CR>
+map sj :set splitbelow<CR>:split<CR>
+map sh :set nosplitright<CR>:vsplit<CR>:set splitright<CR>
+map sl :set splitright<CR>:vsplit<CR>
+
+" Opening a terminal window
+map <LEADER>/ :set splitbelow<CR>:sp<CR>:term<CR>
+
+" Auto change directory to current dir
+autocmd BufEnter * silent! lcd %:p:h
+
 ""my shotcut key settings ***************************************
 map ` :!python %<CR>
 ""set a map for esc 
@@ -95,10 +109,25 @@ inoremap ** """<space><space>"""<ESC>3hi
 
 " Open the vimrc file anytime
 noremap <LEADER>rc :e ~/.config/nvim/init.vim<CR>
+" Open Startify
+noremap <LEADER>st :Startify<CR>
 " Disable the default s key
 noremap s <nop>
 " Remove spaces at the end of lines
 nnoremap <silent> ,<Space> :<C-u>silent! keeppatterns %substitute/\s\+$//e<CR>
+nnoremap Y y$
+nnoremap <LEADER>b :b
+
+" ===
+" === Markdown Settings
+" ===
+" Snippets
+source ~/.config/nvim/md-snippets.vim
+" auto spell
+autocmd BufRead,BufNewFile *.md setlocal spell
+
+"coc.nvim will have bad experience for diagnostic messages when it's default 4000.
+set updatetime=300
 
 "neovim python provider
 let g:python3_host_prog  = '/Users/gengjiwei/anaconda3/bin/python3'
@@ -106,25 +135,16 @@ let g:python3_host_prog  = '/Users/gengjiwei/anaconda3/bin/python3'
 "load the plugins
 call plug#begin('~/.local/share/nvim/plugged')
 Plug 'morhetz/gruvbox'
-"Plug 'vim-airline/vim-airline'
-"Plug 'vim-airline/vim-airline-themes'
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'scrooloose/nerdcommenter' " in <space>cc to comment a line cu to cancle commnet
-"Plug 'itchyny/vim-cursorword'
-"Plug 'tmhedberg/SimpylFold'
 Plug 'tpope/vim-surround'
 Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
-Plug 'Vimjas/vim-python-pep8-indent'
-"Plug 'mbbill/undotree/'
-"Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'Vimjas/vim-python-pep8-indent', {'for': ['python']}
 Plug 'jpalardy/vim-slime'
-"Plug 'tpope/vim-fugitive'
 Plug 'bling/vim-bufferline'
-"Plug 'dracula/vim', { 'as': 'dracula' }
 Plug 'mhinz/vim-startify'
-Plug 'jacoborus/tender.vim'
-Plug 'Yggdroot/indentLine'
+Plug 'Yggdroot/indentLine', {'for': ['python']}
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 Plug 'easymotion/vim-easymotion'
@@ -135,15 +155,17 @@ Plug 'ryanoasis/vim-devicons'
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install_sync() }, 'for' :['markdown', 'vim-plug'] }
 Plug 'dhruvasagar/vim-table-mode', { 'on': 'TableModeToggle' }
 Plug 'itchyny/lightline.vim'
-"Plug 'kien/rainbow_parentheses.vim'
 Plug 'frazrepo/vim-rainbow'
 Plug 'vwxyutarooo/nerdtree-devicons-syntax'
 Plug 'majutsushi/tagbar', {'on': 'TagbarToggle'}
 Plug 'ajmwagar/vim-deus'
-"Plug 'joshdick/onedark.vim'
 Plug 'junegunn/goyo.vim'
 Plug 'junegunn/limelight.vim'
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+Plug 'tmhedberg/SimpylFold', {'for': ['python']}
+Plug 'vim-python/python-syntax', {'for': ['python']}
+Plug 'jaxbot/semantic-highlight.vim'
+Plug 'gko/vim-coloresque', {'for': ['html', 'css', 'less']}
 call plug#end()
 colorscheme gruvbox
 "colorscheme deus
@@ -201,9 +223,8 @@ endfunction
 "silent! autocmd WinEnter * silent! call silent! timer_start(600, { tid -> execute('unmap if')})
 " use <tab> for trigger completion and navigate to the next complete item
 " Installing plugins
-" You will have bad experience for diagnostic messages when it's default 4000.
-set updatetime=300
-let g:coc_global_extensions = ['coc-python', 'coc-vimlsp', 'coc-emmet', 'coc-html', 'coc-json', 'coc-css', 'coc-tsserver', 'coc-yank', 'coc-lists', 'coc-gitignore', 'coc-translator']
+"let g:coc_global_extensions = ['coc-python', 'coc-vimlsp', 'coc-emmet', 'coc-html', 'coc-json','coc-css', 'coc-tsserver', 'coc-yank', 'coc-lists', 'coc-gitignore', 'coc-translator']
+let g:coc_global_extensions = ['coc-python', 'coc-vimlsp', 'coc-html', 'coc-json', 'coc-css', 'coc-tsserver', 'coc-yank', 'coc-lists', 'coc-gitignore', 'coc-vimlsp', 'coc-tailwindcss', 'coc-stylelint', 'coc-tslint', 'coc-lists', 'coc-git', 'coc-explorer', 'coc-pyright', 'coc-sourcekit', 'coc-translator', 'coc-emmet']
 function! s:check_back_space() abort
   let col = col('.') - 1
   return !col || getline('.')[col - 1]  =~ '\s'
@@ -232,7 +253,6 @@ nnoremap <silent> <space>e  :<C-u>CocList extensions<cr>
 nmap ts <Plug>(coc-translator-p)
 " Use K to show documentation in preview window
 nnoremap <silent> K :call <SID>show_documentation()<CR>
-
 function! s:show_documentation()
   if (index(['vim','help'], &filetype) >= 0)
     execute 'h '.expand('<cword>')
@@ -240,6 +260,9 @@ function! s:show_documentation()
     call CocAction('doHover')
   endif
 endfunction
+let g:coc_snippet_next = ',f'
+let g:coc_snippet_prev = ',b'
+imap ,f <Plug>(coc-snippets-expand)
 
 "vim-slime
 let g:slime_target = "tmux"
@@ -247,9 +270,12 @@ let g:slime_default_config = {"socket_name": "default", "target_pane": "{right-o
 let g:slime_python_ipython = 1 
 
 "ultisnips
-let g:UltiSnipsExpandTrigger="<c-b>"
-let g:UltiSnipsJumpForwardTrigger="<c-b>"
-let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+"let g:UltiSnipsExpandTrigger="<c-b>"
+let g:UltiSnipsExpandTrigger=",f"
+"let g:UltiSnipsJumpForwardTrigger="<c-b>"
+"let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+let g:UltiSnipsJumpForwardTrigger=",f"
+let g:UltiSnipsJumpBackwardTrigger=",b"
 
 "easymotion 
 nmap ss <Plug>(easymotion-s2)
@@ -277,13 +303,6 @@ function! FloatingFZF()
   call nvim_open_win(buf, v:true, opts)
 endfunction
 
-" ===
-" === Markdown Settings
-" ===
-" Snippets
-source ~/.config/nvim/md-snippets.vim
-" auto spell
-autocmd BufRead,BufNewFile *.md setlocal spell
 
 " ===
 " === MarkdownPreview
@@ -335,7 +354,7 @@ endfunction
 "au Syntax * RainbowParenthesesLoadBraces
 "vim-rainbow
 "let g:rainbow_active = 1
-au FileType python,vim,markdown,html,java,go,sh,json,css call rainbow#load()
+au FileType python,vim,markdown,java,go,sh,json,javascript call rainbow#load()
 
 "tagbar
 nmap tt :TagbarToggle<CR>
@@ -369,4 +388,11 @@ func SetTitle()
     endif
 endfunc 
 autocmd BufNewFile * normal G
+
+"python_syntax
+let python_highlight_all = 1
+
+"indentLine
+let g:indentLine_showFirstIndentLevel =1
+let g:indentLine_char='┆'
 
