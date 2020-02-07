@@ -223,8 +223,8 @@ endfunction
 "silent! autocmd WinEnter * silent! call silent! timer_start(600, { tid -> execute('unmap if')})
 " use <tab> for trigger completion and navigate to the next complete item
 " Installing plugins
-"let g:coc_global_extensions = ['coc-python', 'coc-vimlsp', 'coc-emmet', 'coc-html', 'coc-json','coc-css', 'coc-tsserver', 'coc-yank', 'coc-lists', 'coc-gitignore', 'coc-translator']
-let g:coc_global_extensions = ['coc-python', 'coc-vimlsp', 'coc-html', 'coc-json', 'coc-css', 'coc-tsserver', 'coc-yank', 'coc-lists', 'coc-gitignore', 'coc-vimlsp', 'coc-tailwindcss', 'coc-stylelint', 'coc-tslint', 'coc-lists', 'coc-git', 'coc-explorer', 'coc-pyright', 'coc-sourcekit', 'coc-translator', 'coc-emmet']
+let g:coc_global_extensions = ['coc-python', 'coc-vimlsp', 'coc-emmet', 'coc-html', 'coc-json','coc-css', 'coc-tsserver', 'coc-yank', 'coc-lists', 'coc-gitignore', 'coc-translator', 'coc-pyright', 'coc-git']
+"let g:coc_global_extensions = ['coc-python', 'coc-vimlsp', 'coc-html', 'coc-json', 'coc-css', 'coc-tsserver', 'coc-yank', 'coc-lists', 'coc-gitignore', 'coc-tailwindcss', 'coc-stylelint', 'coc-tslint', 'coc-lists', 'coc-git', 'coc-explorer', 'coc-pyright', 'coc-sourcekit', 'coc-translator', 'coc-emmet']
 function! s:check_back_space() abort
   let col = col('.') - 1
   return !col || getline('.')[col - 1]  =~ '\s'
@@ -339,7 +339,7 @@ function MyCustomHighlights()
 	hi  semshiParameterUnused ctermfg=117 guifg=#87d7ff cterm=underline gui=underline
 	hi  semshiFree            ctermfg=218 guifg=#ffafd7
 	hi  semshiBuiltin         ctermfg=175 guifg=#ff5fff
-	hi  semshiAttribute       ctermfg=72 guifg=#00ffaf
+	hi  semshiAttribute       ctermfg=72  guifg=#00ffaf
 	hi  semshiSelf            ctermfg=249 guifg=#b2b2b2
 	hi  semshiUnresolved      ctermfg=226 guifg=#ffff00 cterm=underline gui=underline
 	hi  semshiSelected        ctermfg=231 guifg=#ffffff ctermbg=161 guibg=#d7005f
@@ -354,7 +354,7 @@ endfunction
 "au Syntax * RainbowParenthesesLoadBraces
 "vim-rainbow
 "let g:rainbow_active = 1
-au FileType python,vim,markdown,java,go,sh,json,javascript call rainbow#load()
+au FileType python,vim,markdown,java,go,sh,json,javascript,typescript call rainbow#load()
 
 "tagbar
 nmap tt :TagbarToggle<CR>
